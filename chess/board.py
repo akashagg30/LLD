@@ -1,4 +1,5 @@
 
+from logging import debug
 from typing import List, Optional
 
 from pieces import Color, Piece, PieceType, piece_factory
@@ -26,7 +27,8 @@ class Board:
             raise Exception(f"Invalid Move, no piece at [{old_r}{old_c}]")
         if self.does_any_piece_lies_in_path(old_r, old_c, new_r, new_c):
             raise Exception("Invalid Move, you can't jump over pieces")
-        piece.is_valid(new_r, new_c)
+        if not piece.is_valid(new_r, new_c):
+            raise Exception("Invalid Move for the piece")
 
         if self.__board[new_r][new_c]:
             self.__killed_pieces.append(self.__board[new_r][new_c])

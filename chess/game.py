@@ -1,4 +1,5 @@
 
+import traceback
 from board import Board
 from pieces import Color
 from player import Player
@@ -40,6 +41,7 @@ class Game:
             )
             self.__current_player = self.__player1 if self.is_current_player_black else self.__player2 # changing current player
         except BaseException as e:
+            # traceback.print_exc()
             print(e)
         self.__board.draw()
     

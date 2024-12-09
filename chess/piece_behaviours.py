@@ -56,11 +56,10 @@ class StraigtOrDiagonalMove(MoveMechanism):
     
     @classmethod
     def move_iterator(cls, *args, **kwargs):
-        try:
+        if StraigtMove.is_valid(*args, **kwargs):
             return StraigtMove.move_iterator(*args, **kwargs) # try if it's a straigt move
-        except:
-            pass
-        return DiagonalMove.move_iterator(*args, **kwargs) # if it's not a straigt move, it should definately be a diagonal move
+        if DiagonalMove.is_valid(*args, **kwargs):
+            return DiagonalMove.move_iterator(*args, **kwargs) # if it's a diagonal move
 
 class KnightMove(MoveMechanism):
     @staticmethod
