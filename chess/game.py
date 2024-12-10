@@ -7,8 +7,8 @@ from player import Player
 
 class Game:
     __board : Board = None
-    __player1 : Player = None
-    __player2 : Player = None
+    __player1 : Player = None # white
+    __player2 : Player = None # black
     __current_player : Player = None
 
     @property
@@ -30,9 +30,15 @@ class Game:
         self.__current_player = player1
     
     def current_player_move(self):
-        move_input = input(f"{self.__current_player.name}, your move : ")
-        old_r, old_c, new_r, new_c = list(map(int, move_input.split(" ")))
         try:
+            move_input = input(f"{self.__current_player.name}, your move : ")
+            old_r, old_c, new_r, new_c = list(map(int, move_input.split(" ")))
+        except BaseException as e:
+            print(e, ". please retry")
+            return self.current_player_move()
+        try:
+            if self.is_current_player_black ^ (self.__board.get_piece_at_position(old_r, old_c).color=="black"):
+                raise Exception("You can only move your own pieces")
             self.__board.move(
                 old_r=old_r,
                 old_c=old_c,
@@ -51,4 +57,4 @@ class Game:
             self.current_player_move()
 
 if __name__ == "__main__":
-    Game(Player("a"), Player("b")).play()
+    Game(Player("w"), Player("b")).play()
